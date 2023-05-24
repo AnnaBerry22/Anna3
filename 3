@@ -1,0 +1,17 @@
+ while (left != b)
+  {
+    // Правая граница очередного участка.
+    const double right = fmin(b, left + step), f_right = f(right);
+    const bool f_right_zero = abs(f_right) <= f_tol;
+    
+    // Корень на правой границе участка?
+    if (f_right_zero && !report(right))
+      return right;
+
+    // Есть корень внутри участка?
+    if (!(f_left_zero || f_right_zero) && signbit(f_left) != signbit(f_right))
+    {
+      const double root = solver(f, left, right, x_tol);
+      if (!report(root))
+        return root;
+    }
